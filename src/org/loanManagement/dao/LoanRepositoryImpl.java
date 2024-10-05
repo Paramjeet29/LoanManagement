@@ -143,59 +143,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
         }
     }
 
-//    @Override
-//    public List<Loan> getAllLoan() {
-//        List<Loan> loans = new ArrayList<>();
-//        try (Connection con = getConnection();
-//             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Loan"); // Updated table name
-//             ResultSet rs = pstmt.executeQuery()) {
-//
-//            while (rs.next()) {
-//                Loan loan = new Loan();
-//                loan.setLoanId(rs.getInt("loan_id"));
-//                loan.setCustomerId(rs.getInt("customer_id"));
-//                loan.setPrincipalAmount(rs.getDouble("principal_amount"));
-//                loan.setInterestRate(rs.getDouble("interest_rate"));
-//                loan.setLoanTerm(rs.getInt("loan_term"));
-//                loan.setLoanType(rs.getString("loan_type"));
-//                loan.setLoanStatus(rs.getString("loan_status"));
-//                loans.add(loan);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return loans;
-//    }
-//
-//    @Override
-//    public Loan getLoanById(int loanId) throws InvalidLoanException {
-//        try (Connection con = getConnection();
-//             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Loan WHERE loan_id = ?")) { // Updated table name
-//
-//            pstmt.setInt(1, loanId);
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            if (rs.next()) {
-//                Loan loan = new Loan();
-//                loan.setLoanId(rs.getInt("loan_id"));
-//                loan.setCustomer(rs.getInt("customer_id"));
-//                loan.setPrincipalAmount(rs.getDouble("principal_amount"));
-//                loan.setInterestRate(rs.getDouble("interest_rate"));
-//                loan.setLoanTerm(rs.getInt("loan_term"));
-//                loan.setLoanType(rs.getString("loan_type"));
-//                loan.setLoanStatus(rs.getString("loan_status"));
-//                return loan;
-//            } else {
-//                throw new InvalidLoanException("Loan not found with ID: " + loanId);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new InvalidLoanException("Error retrieving loan by ID: " + loanId);
-//        }
-//    }
-//}
+
     @Override
     public List<Loan> getAllLoan() {
         List<Loan> loans = new ArrayList<>();
