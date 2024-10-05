@@ -13,7 +13,7 @@ import java.util.List;
 public class LoanRepositoryImpl implements ILoanRepository {
 
     private Connection getConnection() {
-        return DBConnUtil.getConnection(); // Assuming this method is implemented to provide a connection.
+        return DBConnUtil.getConnection(); 
     }
 
 
@@ -29,7 +29,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
             pstmt.setDouble(3, loan.getInterestRate());
             pstmt.setInt(4, loan.getLoanTerm());
             pstmt.setString(5, loan.getLoanType());
-            pstmt.setString(6, "Pending"); // Initial loan status
+            pstmt.setString(6, "Pending");
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -65,7 +65,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
                 double interestRate = rs.getDouble("interest_rate");
                 int loanTerm = rs.getInt("loan_term");
 
-                return (principalAmount * interestRate * loanTerm) / 100; // Adjusted calculation as per your requirement
+                return (principalAmount * interestRate * loanTerm) / 100;
             } else {
                 throw new InvalidLoanException("Loan not found with ID: " + loanId);
             }
@@ -79,7 +79,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
     @Override
     public String loanStatus(int loanId) throws InvalidLoanException {
         try (Connection con = getConnection();
-             PreparedStatement pstmt = con.prepareStatement("SELECT loan_status FROM Loan WHERE loan_id = ?")) { // Updated table name
+             PreparedStatement pstmt = con.prepareStatement("SELECT loan_status FROM Loan WHERE loan_id = ?")) {
 
             pstmt.setInt(1, loanId);
             ResultSet rs = pstmt.executeQuery();
@@ -99,7 +99,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
     @Override
     public double calculateEMI(int loanId) throws InvalidLoanException {
         try (Connection con = getConnection();
-             PreparedStatement pstmt = con.prepareStatement("SELECT principal_amount, interest_rate, loan_term FROM Loan WHERE loan_id = ?")) { // Updated table name
+             PreparedStatement pstmt = con.prepareStatement("SELECT principal_amount, interest_rate, loan_term FROM Loan WHERE loan_id = ?")) { 
 
             pstmt.setInt(1, loanId);
             ResultSet rs = pstmt.executeQuery();
@@ -109,7 +109,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
                 double annualInterestRate = rs.getDouble("interest_rate");
                 int loanTermInMonths = rs.getInt("loan_term");
 
-                double monthlyInterestRate = annualInterestRate / (12 * 100); // Monthly interest rate
+                double monthlyInterestRate = annualInterestRate / (12 * 100); 
                 return (principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermInMonths)) /
                         (Math.pow(1 + monthlyInterestRate, loanTermInMonths) - 1);
             } else {
@@ -143,59 +143,7 @@ public class LoanRepositoryImpl implements ILoanRepository {
         }
     }
 
-//    @Override
-//    public List<Loan> getAllLoan() {
-//        List<Loan> loans = new ArrayList<>();
-//        try (Connection con = getConnection();
-//             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Loan"); // Updated table name
-//             ResultSet rs = pstmt.executeQuery()) {
-//
-//            while (rs.next()) {
-//                Loan loan = new Loan();
-//                loan.setLoanId(rs.getInt("loan_id"));
-//                loan.setCustomerId(rs.getInt("customer_id"));
-//                loan.setPrincipalAmount(rs.getDouble("principal_amount"));
-//                loan.setInterestRate(rs.getDouble("interest_rate"));
-//                loan.setLoanTerm(rs.getInt("loan_term"));
-//                loan.setLoanType(rs.getString("loan_type"));
-//                loan.setLoanStatus(rs.getString("loan_status"));
-//                loans.add(loan);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return loans;
-//    }
-//
-//    @Override
-//    public Loan getLoanById(int loanId) throws InvalidLoanException {
-//        try (Connection con = getConnection();
-//             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Loan WHERE loan_id = ?")) { // Updated table name
-//
-//            pstmt.setInt(1, loanId);
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            if (rs.next()) {
-//                Loan loan = new Loan();
-//                loan.setLoanId(rs.getInt("loan_id"));
-//                loan.setCustomer(rs.getInt("customer_id"));
-//                loan.setPrincipalAmount(rs.getDouble("principal_amount"));
-//                loan.setInterestRate(rs.getDouble("interest_rate"));
-//                loan.setLoanTerm(rs.getInt("loan_term"));
-//                loan.setLoanType(rs.getString("loan_type"));
-//                loan.setLoanStatus(rs.getString("loan_status"));
-//                return loan;
-//            } else {
-//                throw new InvalidLoanException("Loan not found with ID: " + loanId);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new InvalidLoanException("Error retrieving loan by ID: " + loanId);
-//        }
-//    }
-//}
+
     @Override
     public List<Loan> getAllLoan() {
         List<Loan> loans = new ArrayList<>();

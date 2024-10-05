@@ -1,8 +1,4 @@
-//package org.loanManagement.main;
-//
-//public class LoanManagement {
-//
-//}
+
 package org.loanManagement.main;
 
 import org.loanManagement.dao.LoanRepositoryImpl;
@@ -27,7 +23,8 @@ public class LoanManagement {
             System.out.println("4. Calculate EMI");
             System.out.println("5. Make Loan Repayment");
             System.out.println("6. View All Loans");
-            System.out.println("7. Exit");
+            System.out.println("7. view loan by id");
+            System.out.println("8. exit");
             System.out.print("Select an option: ");
 
             int option = scanner.nextInt();
@@ -45,9 +42,9 @@ public class LoanManagement {
                     System.out.print("Enter Loan Type: ");
                     String loanType = scanner.next();
 
-                    // Assuming you have a method to retrieve a Customer object by ID
-                    Customer customer = new Customer(); // Retrieve customer from database as needed
-                    customer.setCustomerId(customerId); // Set customer ID
+                   
+                    Customer customer = new Customer(); 
+                    customer.setCustomerId(customerId); 
 
                     Loan loan = new Loan();
                     loan.setCustomer(customer);
@@ -92,7 +89,7 @@ public class LoanManagement {
                     }
                     break;
 
-                case 5: // Make Loan Repayment
+                case 5:
                     System.out.print("Enter Loan ID: ");
                     int loanIdForRepayment = scanner.nextInt();
                     System.out.print("Enter Repayment Amount: ");
@@ -108,11 +105,21 @@ public class LoanManagement {
                     List<Loan> loans = loanRepository.getAllLoan();
                     System.out.println("All Loans:");
                     for (Loan l : loans) {
-                        System.out.println(l); // Make sure Loan has a proper toString() method
+                        System.out.println(l); 
+                    }
+                    break;
+                case 7: // View All Loans
+                	System.out.print("Enter Loan ID: ");
+                    int loanId = scanner.nextInt();
+                    try {
+                        Loan loan1 = loanRepository.getLoanById(loanId); // Call to getLoanById
+                        System.out.println("Loan Details: " + loan1);
+                    } catch (InvalidLoanException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
 
-                case 7: // Exit
+                case 8: // Exit
                     System.out.println("Exiting the Loan Management System.");
                     scanner.close();
                     return;

@@ -1,8 +1,5 @@
 package org.loanManagement.entity;
 
-//public class Customer {
-//
-//}
 
 public class Customer {
     private int customerId;
