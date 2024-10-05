@@ -5,6 +5,7 @@ import org.loanManagement.entity.Customer;
 import org.loanManagement.entity.Loan;
 import org.loanManagement.exception.InvalidLoanException;
 import org.loanManagement.util.DBConnUtil;
+import org.loanManagement.util.DBPropertyUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,8 +13,15 @@ import java.util.List;
 
 public class LoanRepositoryImpl implements ILoanRepository {
 
+	private static final String PROPERTIES_FILE = "src/org/loanManagement/util/db.properties";
+
     private Connection getConnection() {
-        return DBConnUtil.getConnection(); 
+        String connString = DBPropertyUtil.getConnString(PROPERTIES_FILE);
+        if (connString == null) {
+            System.err.println("Failed to create connection string");
+            return null;
+        }
+        return DBConnUtil.getConnection(connString);
     }
 
 
